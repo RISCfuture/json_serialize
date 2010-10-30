@@ -1,0 +1,33 @@
+h1. json_serialize -- JSON serialization in ActiveRecord
+
+| *Author* | Tim Morgan |
+| *Version* | 1.0 (Oct 30, 2010) |
+| *License* | Released under the MIT license. |
+
+h2. About
+
+@json_serialize@ gives you the ability to JSON-encode data into ActiveRecord
+model fields. JSON is a more compact but less robust serialization than YAML.
+Only hashes, arrays, and primitives can be reliably encoded to database fields;
+other types may not decode properly or at all.
+
+h2. Installation and Usage
+
+Firstly, add the gem to your Rails project's @Gemfile@:
+
+<pre><code>
+gem 'json_serialize'
+</code></pre>
+
+Then, extend your model with the @JsonSerialize@ module, and call the
+@json_serialize@ method to indicate which fields should be serialized:
+
+<pre><code>
+class MyModel < ActiveRecord::Base
+  extend JsonSerialize
+  json_serialize :favorites, :preferences
+end
+</code></pre>
+
+More information can be found at the {JsonSerialize#json_serialize} method
+documentation.
