@@ -15,7 +15,6 @@ Jeweler::Tasks.new do |gem|
   gem.email = "git@timothymorgan.info"
   gem.homepage = "http://github.com/riscfuture/json_serialize"
   gem.authors = [ "Tim Morgan" ]
-  gem.required_ruby_version = '>= 1.9'
   gem.add_dependency "activesupport", ">= 2.0"
 end
 Jeweler::GemcutterTasks.new
