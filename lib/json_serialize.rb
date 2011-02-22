@@ -2,27 +2,69 @@
 #
 # @example Basic usage
 #   class MyModel < ActiveRecord::Base
-#     extend JsonSerialize
+#     include JsonSerialize
 #     json_serialize :some_field
 #   end
 
 module JsonSerialize
+  extend ActiveSupport::Concern
 
-  # @overload json_serialize(field, ...)
-  #   Marks one or more fields as JSON-serialized. These fields are stored in
-  #   the database as JSON and encoded/decoded automatically upon read/write.
-  #   @param [Symbol] field The database field to JSON-serialize.
+  module ClassMethods
+    # @overload json_serialize(field, ...)
+    #   Marks one or more fields as JSON-serialized. These fields are stored in
+    #   the database as JSON and encoded/decoded automatically upon read/write.
+    #   @param [Symbol] field The database field to JSON-serialize.
 
-  def json_serialize(*fields)
-    fields.each do |field|
-      define_method field do
-        value = read_attribute(field)
-        value.nil? ? nil : ActiveSupport::JSON.decode(value)
+    def json_serialize(*fields)
+      fields.each do |field|
+        define_method field do
+          if instance_variable_defined?(field_ivar(field)) then
+            instance_variable_get field_ivar(field)
+          else
+            encoded = read_attribute(field)
+            decoded = encoded.nil? ? nil : ActiveSupport::JSON.decode(encoded)
+            instance_variable_set field_ivar(field), decoded
+            decoded
+          end
+        end
+  
+        define_method :"#{field}=" do |value|
+          write_attribute field, (value.nil? ? nil : ActiveSupport::JSON.encode(value))
+          instance_variable_set field_ivar(field), value
+        end
       end
 
-      define_method :"#{field}=" do |value|
-        write_attribute field, (value.nil? ? nil : ActiveSupport::JSON.encode(value))
+      define_method :serialize_json_values do
+        fields.each do |field|
+          if instance_variable_defined?(field_ivar(field)) then
+            send :"#{field}=", instance_variable_get(field_ivar(field))
+          end
+        end
       end
+      
+      define_method :reload_with_refresh_json_ivars do |*args|
+        res = reload_without_refresh_json_ivars *args
+        fields.each { |field| remove_instance_variable field_ivar(field) if instance_variable_defined?(field_ivar(field)) }
+        res
+      end
+      
+      define_method :update_with_refresh_json_ivars do |*args|
+        res = update_without_refresh_json_ivars(*args)
+        fields.each { |field| remove_instance_variable field_ivar(field) if instance_variable_defined?(field_ivar(field)) }
+        res
+      end
+      
+      before_validation :serialize_json_values
+      alias_method_chain :reload, :refresh_json_ivars
+      alias_method_chain :update, :refresh_json_ivars
+    end
+  end
+
+  module InstanceMethods
+    private
+
+    def field_ivar(name)
+      :"@_deserialized_#{name}"
     end
   end
 end

@@ -19,12 +19,12 @@ Firstly, add the gem to your Rails project's @Gemfile@:
 gem 'json_serialize'
 </code></pre>
 
-Then, extend your model with the @JsonSerialize@ module, and call the
+Then, include into your model the @JsonSerialize@ module, and call the
 @json_serialize@ method to indicate which fields should be serialized:
 
 <pre><code>
 class MyModel < ActiveRecord::Base
-  extend JsonSerialize
+  include JsonSerialize
   json_serialize :favorites, :preferences
 end
 </code></pre>

@@ -9,4 +9,5 @@ group :development do
   gem 'yard'
   gem 'RedCloth', require: 'redcloth'
   gem 'rspec'
+  gem 'sqlite3'
 end

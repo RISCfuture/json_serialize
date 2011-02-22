@@ -19,6 +19,7 @@ rdoc
 pkg
 .bundle
 .rvmrc
+test.sqlite
 
 ## PROJECT::DOCUMENTATION
 .yardoc
