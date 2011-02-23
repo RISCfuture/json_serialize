@@ -39,8 +39,8 @@ PLATFORMS
 
 DEPENDENCIES
   RedCloth
-  activerecord
-  activesupport
+  activerecord (>= 3.0)
+  activesupport (>= 3.0)
   jeweler
   rspec
   sqlite3

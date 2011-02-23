@@ -1,8 +1,8 @@
 source 'http://rubygems.org'
 
 # DEPENDENCIES
-gem 'activerecord', require: 'active_record'
-gem 'activesupport', require: 'active_support/core_ext/object/try'
+gem 'activerecord', '>= 3.0', require: 'active_record'
+gem 'activesupport', '>= 3.0', require: 'active_support/core_ext/object/try'
 
 group :development do
   gem 'jeweler'
