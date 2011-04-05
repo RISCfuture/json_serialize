@@ -3,26 +3,34 @@
 # @example Basic usage
 #   class MyModel < ActiveRecord::Base
 #     include JsonSerialize
-#     json_serialize :some_field
+#     json_serialize :some_field, another_field: "Default value"
 #   end
 
 module JsonSerialize
   extend ActiveSupport::Concern
 
   module ClassMethods
-    # @overload json_serialize(field, ...)
+    # @overload json_serialize(field, ..., fields_with_default_values)
     #   Marks one or more fields as JSON-serialized. These fields are stored in
     #   the database as JSON and encoded/decoded automatically upon read/write.
     #   @param [Symbol] field The database field to JSON-serialize.
+    #   @param [Hash<Symbol, Object>] fields_with_default_values A map of
+    #     additional fields to JSON-serialize, with the default value that
+    #     should be given if the field is @NULL@.
 
     def json_serialize(*fields)
+      fields_with_defaults = fields.extract_options!
       fields.each do |field|
+        fields_with_defaults[field] = nil
+      end
+      
+      fields_with_defaults.each do |field, default_value|
         define_method field do
           if instance_variable_defined?(field_ivar(field)) then
             instance_variable_get field_ivar(field)
           else
             encoded = read_attribute(field)
-            decoded = encoded.nil? ? nil : ActiveSupport::JSON.decode(encoded)
+            decoded = encoded.nil? ? default_value : ActiveSupport::JSON.decode(encoded)
             instance_variable_set field_ivar(field), decoded
             decoded
           end

@@ -15,6 +15,12 @@ describe JsonSerialize do
         Json.update_all(data: nil)
         object.reload.data.should be_nil
       end
+      
+      it "should return a default value if the value is nil and a default is set" do
+        object = Json.create!
+        Json.update_all(default: nil)
+        object.reload.default.should eql("default value")
+      end
     end
 
     context "[setter]" do

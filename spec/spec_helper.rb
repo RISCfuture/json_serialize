@@ -12,12 +12,12 @@ ActiveRecord::Base.establish_connection(
 
 class Json < ActiveRecord::Base
   include JsonSerialize
-  json_serialize :data
+  json_serialize :data, default: "default value"
 end
 
 RSpec.configure do |config|
   config.before(:each) do
     Json.connection.execute "DROP TABLE IF EXISTS jsons"
-    Json.connection.execute "CREATE TABLE jsons (id INTEGER PRIMARY KEY ASC, data TEXT)"
+    Json.connection.execute "CREATE TABLE jsons (id INTEGER PRIMARY KEY ASC, data TEXT, 'default' TEXT)"
   end
 end
