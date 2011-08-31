@@ -17,6 +17,7 @@ Jeweler::Tasks.new do |gem|
   gem.email = "git@timothymorgan.info"
   gem.homepage = "http://github.com/riscfuture/json_serialize"
   gem.authors = [ "Tim Morgan" ]
+  gem.files = %w( lib/**/* json_serialize.gemspec LICENSE README.textile )
 end
 Jeweler::RubygemsDotOrgTasks.new
 
@@ -30,7 +31,7 @@ YARD::Rake::YardocTask.new('doc') do |doc|
   doc.options << "--no-private"
   doc.options << "-r" << "README.textile"
   doc.options << "-o" << "doc"
-  doc.options << "--title" << "json_serialize Documentation".inspect
+  doc.options << "--title" << "json_serialize Documentation"
   
   doc.files = [ 'lib/**/*', 'README.textile' ]
 end
