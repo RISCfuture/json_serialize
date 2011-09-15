@@ -4,40 +4,28 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{json_serialize}
-  s.version = "2.1.0"
+  s.name = "json_serialize"
+  s.version = "2.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Tim Morgan"]
-  s.date = %q{2011-04-04}
-  s.description = %q{Adds to ActiveRecord the ability to JSON-serialize certain fields.}
-  s.email = %q{git@timothymorgan.info}
+  s.date = "2011-09-15"
+  s.description = "Adds to ActiveRecord the ability to JSON-serialize certain fields."
+  s.email = "git@timothymorgan.info"
   s.extra_rdoc_files = [
     "LICENSE",
     "README.textile"
   ]
   s.files = [
-    ".document",
-    ".rspec",
-    "Gemfile",
-    "Gemfile.lock",
     "LICENSE",
     "README.textile",
-    "Rakefile",
-    "VERSION",
     "json_serialize.gemspec",
-    "lib/json_serialize.rb",
-    "spec/json_serialize_spec.rb",
-    "spec/spec_helper.rb"
+    "lib/json_serialize.rb"
   ]
-  s.homepage = %q{http://github.com/riscfuture/json_serialize}
+  s.homepage = "http://github.com/riscfuture/json_serialize"
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.6.2}
-  s.summary = %q{Adds JSON serialization to ActiveRecord models}
-  s.test_files = [
-    "spec/json_serialize_spec.rb",
-    "spec/spec_helper.rb"
-  ]
+  s.rubygems_version = "1.8.10"
+  s.summary = "Adds JSON serialization to ActiveRecord models"
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
