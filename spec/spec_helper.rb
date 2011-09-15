@@ -10,14 +10,15 @@ ActiveRecord::Base.establish_connection(
   database: 'test.sqlite'
 )
 
+$default = "default value"
 class Json < ActiveRecord::Base
   include JsonSerialize
-  json_serialize :data, default: "default value"
+  json_serialize :data, default: $default, default_proc: -> { Hash.new }
 end
 
 RSpec.configure do |config|
   config.before(:each) do
     Json.connection.execute "DROP TABLE IF EXISTS jsons"
-    Json.connection.execute "CREATE TABLE jsons (id INTEGER PRIMARY KEY ASC, data TEXT, 'default' TEXT)"
+    Json.connection.execute "CREATE TABLE jsons (id INTEGER PRIMARY KEY ASC, data TEXT, 'default' TEXT, default_proc TEXT)"
   end
 end

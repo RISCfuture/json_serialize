@@ -30,7 +30,8 @@ module JsonSerialize
             instance_variable_get field_ivar(field)
           else
             encoded = read_attribute(field)
-            decoded = encoded.nil? ? default_value : ActiveSupport::JSON.decode(encoded)
+            default = default_value.kind_of?(Proc) ? default_value.call : (default_value.duplicable? ? default_value.dup : default_value)
+            decoded = encoded.nil? ? default : ActiveSupport::JSON.decode(encoded)
             instance_variable_set field_ivar(field), decoded
             decoded
           end

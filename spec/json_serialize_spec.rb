@@ -19,7 +19,14 @@ describe JsonSerialize do
       it "should return a default value if the value is nil and a default is set" do
         object = Json.create!
         Json.update_all(default: nil)
-        object.reload.default.should eql("default value")
+        object.reload.default.should eql($default)
+        object.reload.default.object_id.should_not eql($default.object_id)
+      end
+      
+      it "should call the proc if the default is a proc" do
+        object = Json.create!
+        Json.update_all(default_proc: nil)
+        object.reload.default_proc.should eql({})
       end
     end
 
