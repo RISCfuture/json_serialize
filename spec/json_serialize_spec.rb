@@ -51,10 +51,12 @@ describe JsonSerialize do
       end
       
       it "should clear the in-memory reference on reload" do
-        object = Json.create!(data: { foo: 'bar' })
+        object = Json.create!(data: { foo: 'bar' }, default: %w( baz ))
         object.data[:foo2] = 'bar2'
+        object.default = %w( baz2 )
         object.reload
         object.data.should eql('foo' => 'bar')
+        object.default.should eql(%w( baz ))
       end
     end
   end
