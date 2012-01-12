@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "json_serialize"
-  s.version = "2.2.0"
+  s.version = "2.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Tim Morgan"]
-  s.date = "2011-09-15"
+  s.date = "2012-01-12"
   s.description = "Adds to ActiveRecord the ability to JSON-serialize certain fields."
   s.email = "git@timothymorgan.info"
   s.extra_rdoc_files = [
@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
   ]
   s.homepage = "http://github.com/riscfuture/json_serialize"
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.10"
+  s.rubygems_version = "1.8.15"
   s.summary = "Adds JSON serialization to ActiveRecord models"
 
   if s.respond_to? :specification_version then
