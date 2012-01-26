@@ -69,11 +69,9 @@ module JsonSerialize
     end
   end
 
-  module InstanceMethods
-    private
+  private
 
-    def field_ivar(name)
-      :"@_deserialized_#{name}"
-    end
+  def field_ivar(name)
+    :"@_deserialized_#{name}"
   end
 end
