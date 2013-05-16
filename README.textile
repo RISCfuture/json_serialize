@@ -1,7 +1,7 @@
 h1. json_serialize -- JSON serialization in ActiveRecord
 
 | *Author* | Tim Morgan |
-| *Version* | 2.2.1 (Jan 11, 2012) |
+| *Version* | 2.2.2 (May 15, 2013) |
 | *License* | Released under the MIT license. |
 
 h2. About
