@@ -7,38 +7,38 @@ describe JsonSerialize do
         require 'logger'
         object = Json.create!
         Json.update_all(data: '{"foo":"bar"}')
-        object.reload.data.should eql('foo' => 'bar')
+        expect(object.reload.data).to eql('foo' => 'bar')
       end
 
       it "should return nil if the value is nil" do
         object = Json.create!
         Json.update_all(data: nil)
-        object.reload.data.should be_nil
+        expect(object.reload.data).to be_nil
       end
 
       it "should return a default value if the value is nil and a default is set" do
         object = Json.create!
         Json.update_all(default: nil)
-        object.reload.default.should eql($default)
-        object.reload.default.object_id.should_not eql($default.object_id)
+        expect(object.reload.default).to eql($default)
+        expect(object.reload.default.object_id).not_to eql($default.object_id)
       end
 
       it "should call the proc if the default is a proc" do
         object = Json.create!
         Json.update_all(default_proc: nil)
-        object.reload.default_proc.should eql({})
+        expect(object.reload.default_proc).to eql({})
       end
     end
 
     context "[setter]" do
       it "should JSON-encode the value" do
         object = Json.create!(data: { foo: 'bar' })
-        object.send(:read_attribute, :data).should eql({ foo: 'bar' }.to_json)
+        expect(object.send(:read_attribute, :data)).to eql({ foo: 'bar' }.to_json)
       end
 
       it "should leave nil as nil" do
         object = Json.create!(data: nil)
-        object.send(:read_attribute, :data).should be_nil
+        expect(object.send(:read_attribute, :data)).to be_nil
       end
     end
 
@@ -47,7 +47,7 @@ describe JsonSerialize do
         object             = Json.create!(data: { foo: 'bar' })
         object.data[:foo2] = 'bar2'
         object.save!
-        object.data.should eql(:foo => 'bar', :foo2 => 'bar2')
+        expect(object.data).to eql(:foo => 'bar', :foo2 => 'bar2')
       end
 
       it "should clear the in-memory reference on reload" do
@@ -55,8 +55,8 @@ describe JsonSerialize do
         object.data[:foo2] = 'bar2'
         object.default     = %w( baz2 )
         object.reload
-        object.data.should eql('foo' => 'bar')
-        object.default.should eql(%w( baz ))
+        expect(object.data).to eql('foo' => 'bar')
+        expect(object.default).to eql(%w( baz ))
       end
     end
   end
