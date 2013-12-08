@@ -6,8 +6,8 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'json_serialize'
 
 ActiveRecord::Base.establish_connection(
-  adapter: 'sqlite3',
-  database: 'test.sqlite'
+    adapter:  'sqlite3',
+    database: 'test.sqlite'
 )
 
 $default = "default value"

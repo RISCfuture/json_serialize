@@ -36,7 +36,7 @@ module JsonSerialize
             decoded
           end
         end
-  
+
         define_method :"#{field}=" do |value|
           write_attribute field, (value.nil? ? nil : ActiveSupport::JSON.encode(value))
           instance_variable_set field_ivar(field), value
@@ -50,19 +50,19 @@ module JsonSerialize
           end
         end
       end
-      
+
       define_method :reload_with_refresh_json_ivars do |*args|
         res = reload_without_refresh_json_ivars *args
         fields_with_defaults.keys.each { |field| remove_instance_variable field_ivar(field) if instance_variable_defined?(field_ivar(field)) }
         res
       end
-      
+
       define_method :update_with_refresh_json_ivars do |*args|
         res = update_without_refresh_json_ivars(*args)
         fields_with_defaults.keys.each { |field| remove_instance_variable field_ivar(field) if instance_variable_defined?(field_ivar(field)) }
         res
       end
-      
+
       before_validation :serialize_json_values
       alias_method_chain :reload, :refresh_json_ivars
       alias_method_chain :update, :refresh_json_ivars
