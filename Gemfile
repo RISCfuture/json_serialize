@@ -7,7 +7,7 @@ gem 'activesupport', '>= 3.0', require: 'active_support/core_ext/object/try'
 group :development do
   gem 'jeweler'
   gem 'yard'
-  gem 'RedCloth', require: 'redcloth'
+  gem 'redcarpet', require: nil
   gem 'rspec'
   gem 'sqlite3'
 end

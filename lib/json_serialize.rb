@@ -1,4 +1,4 @@
-# Adds the {#json_serialize} method to @ActiveRecord@ objects.
+# Adds the {ClassMethods#json_serialize} method to `ActiveRecord` objects.
 #
 # @example Basic usage
 #   class MyModel < ActiveRecord::Base
@@ -16,7 +16,7 @@ module JsonSerialize
     #   @param [Symbol] field The database field to JSON-serialize.
     #   @param [Hash<Symbol, Object>] fields_with_default_values A map of
     #     additional fields to JSON-serialize, with the default value that
-    #     should be given if the field is @NULL@.
+    #     should be given if the field is `NULL`.
 
     def json_serialize(*fields)
       fields_with_defaults = fields.extract_options!
