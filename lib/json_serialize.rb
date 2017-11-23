@@ -19,12 +19,12 @@ module JsonSerialize
     #     should be given if the field is `NULL`.
 
     def json_serialize(*fields)
-      fields_with_defaults = fields.extract_options!
+      @fields_with_defaults = fields.extract_options!
       fields.each do |field|
-        fields_with_defaults[field] = nil
+        @fields_with_defaults[field] = nil
       end
 
-      fields_with_defaults.each do |field, default_value|
+      @fields_with_defaults.each do |field, default_value|
         define_method field do
           if instance_variable_defined?(field_ivar(field)) then
             instance_variable_get field_ivar(field)
@@ -44,28 +44,29 @@ module JsonSerialize
       end
 
       define_method :serialize_json_values do
-        fields_with_defaults.keys.each do |field|
+        self.class.instance_variable_get(:@fields_with_defaults).keys.each do |field|
           if instance_variable_defined?(field_ivar(field)) then
             send :"#{field}=", instance_variable_get(field_ivar(field))
           end
         end
       end
 
-      define_method :reload_with_refresh_json_ivars do |*args|
-        res = reload_without_refresh_json_ivars *args
-        fields_with_defaults.keys.each { |field| remove_instance_variable field_ivar(field) if instance_variable_defined?(field_ivar(field)) }
-        res
-      end
-
-      define_method :update_with_refresh_json_ivars do |*args|
-        res = update_without_refresh_json_ivars(*args)
-        fields_with_defaults.keys.each { |field| remove_instance_variable field_ivar(field) if instance_variable_defined?(field_ivar(field)) }
-        res
-      end
-
       before_validation :serialize_json_values
-      alias_method_chain :reload, :refresh_json_ivars
-      alias_method_chain :update, :refresh_json_ivars
+      prepend WithRefreshJSONIvars
+    end
+  end
+
+  module WithRefreshJSONIvars
+    def reload(*args)
+      result = super
+      self.class.instance_variable_get(:@fields_with_defaults).keys.each { |field| remove_instance_variable field_ivar(field) if instance_variable_defined?(field_ivar(field)) }
+      result
+    end
+
+    def update
+      result = super
+      self.class.instance_variable_defined(:@fields_with_defaults).keys.each { |field| remove_instance_variable field_ivar(field) if instance_variable_defined?(field_ivar(field)) }
+      result
     end
   end
 

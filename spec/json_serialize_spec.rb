@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe JsonSerialize do
+RSpec.describe JsonSerialize do
   describe "#json_serialize" do
     context "[getter]" do
       it "should JSON-decode the value" do
