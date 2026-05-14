@@ -15,11 +15,11 @@ Gem::Specification.new do |s|
   s.email = "git@timothymorgan.info"
   s.extra_rdoc_files = [
     "LICENSE",
-    "README.textile"
+    "README.md"
   ]
   s.files = [
     "LICENSE",
-    "README.textile",
+    "README.md",
     "json_serialize.gemspec",
     "lib/json_serialize.rb"
   ]
