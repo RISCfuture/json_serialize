@@ -1,3 +1,7 @@
+> ⚠️ **DEPRECATED:** `json_serialize` is no longer maintained. Modern Rails has
+> native JSON serialization (`serialize :col, JSON` and JSONB columns) that
+> covers the same use cases. The final release is v2.2.3.
+
 json_serialize
 ==============
 
